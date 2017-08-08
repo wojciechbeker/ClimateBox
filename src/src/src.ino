@@ -1,4 +1,10 @@
 #include <dht.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT11;
 int check = 0;
@@ -6,6 +12,7 @@ int check = 0;
 #define DHT11_PIN 7 
 void setup() {
   Serial.begin(9600);
+
   Serial.println("Read sensor: ");
   switch(check) {
     case DHTLIB_OK:
