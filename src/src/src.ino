@@ -12,30 +12,48 @@ int check = 0;
 #define DHT11_PIN 7 
 void setup() {
   Serial.begin(9600);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
+  
+  // Clear the display buffer.
+  display.clearDisplay();
 
-  Serial.println("Read sensor: ");
+  display.setTextSize(3);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println("ClimateBox!");
+  display.display();
+  delay(2000);
+
+  display.setTextSize(1);
+  display.println("Read sensor: ");
   switch(check) {
     case DHTLIB_OK:
-      Serial.println("OK");
+      display.println("OK");
       break;
     case DHTLIB_ERROR_CHECKSUM:
-      Serial.println("Checksum error");
+      display.println("Checksum error");
       break;
     case DHTLIB_ERROR_TIMEOUT:
-      Serial.println("Timeout error");
+      display.println("Timeout error");
       break;
     default:
-      Serial.println("Unknown error");
+      display.println("Unknown error");
       break;
   }
+  display.display();
+  delay(3000);
+  display.clearDisplay();
 }
 
 void loop() {
+  display.setCursor(0,0);
+  display.setTextSize(2);
   int chk = DHT11.read11(DHT11_PIN);
-  Serial.println("Measurements: ");
-  Serial.print("Temperature: ");
-  Serial.println((float)DHT11.temperature);
-  Serial.print("Humidity: ");
-  Serial.println((float)DHT11.humidity);
-  delay(5000);
+  display.println("Temp: ");
+  display.println((float)DHT11.temperature);
+  display.println("Humidity: ");
+  display.println((float)DHT11.humidity);
+  display.display();
+  delay(10000);
+  display.clearDisplay();
 }
