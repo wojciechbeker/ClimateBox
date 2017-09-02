@@ -7,14 +7,18 @@
 Adafruit_SSD1306 display(OLED_RESET);
 
 dht DHT11;
+
+// Check flag for DHT11 sensor status
 int check = 0;
 
 #define DHT11_PIN 7 
+
 void setup() {
   Serial.begin(9600);
+  // Initialize display with I2C address 0x3D
   display.begin(SSD1306_SWITCHCAPVCC, 0x3D);
   
-  // Clear the display buffer.
+  // Clear the display buffer
   display.clearDisplay();
 
   display.setTextSize(3);
@@ -26,6 +30,8 @@ void setup() {
 
   display.setTextSize(1);
   display.println("Read sensor: ");
+
+  // Check DHT11 sensor status
   switch(check) {
     case DHTLIB_OK:
       display.println("OK");
@@ -40,6 +46,7 @@ void setup() {
       display.println("Unknown error");
       break;
   }
+  
   display.display();
   delay(3000);
   display.clearDisplay();
